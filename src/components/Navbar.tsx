@@ -68,19 +68,26 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onInspe
           })}
         </nav>
 
-        {/* Live System Indicator & Primary CTA */}
-        <div className="hidden lg:flex items-center space-x-4">
+        {/* Live System Indicator & Primary CTAs */}
+        <div className="hidden lg:flex items-center space-x-3">
           <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-[#0F1C15] border border-[#EAF3EE]/08 font-mono text-[11px]">
             <span className="w-2 h-2 rounded-full bg-[#2FE8B0] animate-pulse" />
             <span className="text-[#8FA79A]">12,480 HA MONITORED</span>
           </div>
+
+          <a
+            href="/login"
+            className="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-[#142A1F] text-[#2FE8B0] border border-[#2FE8B0]/40 font-space font-semibold text-xs tracking-wide hover:bg-[#1B7A5C] transition-all glow-teal-sm"
+          >
+            <span>CONSOLE LOGIN</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </a>
 
           <button
             onClick={onInspectCredit}
             className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-[#2FE8B0] text-[#0A120E] font-space font-semibold text-xs tracking-wide hover:bg-[#34fbbe] transition-all transform active:scale-95 glow-teal"
           >
             <span>INSPECT CP-09412</span>
-            <ArrowUpRight className="w-4 h-4" />
           </button>
         </div>
 

@@ -1,0 +1,120 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  role      String   // "BUYER" | "AUDITOR" | "REGISTRY"
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id                     String                @id // e.g. "CP-AMZ-8841"
+  name                   String
+  location               String
+  country                String
+  latitude               Float
+  longitude              Float
+  region                 String                // "S. America" | "Africa" | "SE Asia"
+  type                   String                // "Avoided Deforestation" | "Mangrove Restoration" | "Reforestation" | "Peatland Conservation"
+  areaHectares           Int
+  riskScore              Int                   // 0-100
+  trustStatus            String                // "VERIFIED" | "ELEVATED RISK" | "CRITICAL ANOMALY"
+  lastScanDate           String
+  canopyChangeRate       String
+  carbonCreditsIssued    Int
+  vintage                Int
+  description            String
+  sensorMeshNodes        Int
+  droneSurveysCompleted  Int
+  traditionalAuditCost   Float                 @default(45000)
+  traditionalAuditDays   Int                   @default(180)
+  carbonProofCost        Float                 @default(2400)
+  carbonProofSeconds     Float                 @default(4.2)
+  updatedAt              DateTime              @updatedAt
+
+  credits                Credit[]
+  telemetry              TelemetryPoint[]
+  satelliteSnapshots     SatelliteSnapshot[]
+  verificationLedger     VerificationStep[]
+  anomalies              AnomalyEvent[]
+}
+
+model Credit {
+  id                String   @id // e.g. "CP-2026-AMZ-09412"
+  projectId         String
+  projectName       String
+  vintageYear       Int
+  quantityTons      Int
+  serialNumber      String
+  merkleRootHash    String
+  verificationScore Int
+  status            String   // "VERIFIED & AUDITED" | "FLAGGED FOR REVIEW" | "RETIRED"
+  issueDate         String
+  owner             String
+
+  project           Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model TelemetryPoint {
+  id               String   @id @default(uuid())
+  projectId        String
+  date             String
+  ndvi             Float
+  canopyDensity    Float
+  biomass          Float
+  radarBackscatter Float
+  soilMoisture     Float
+  carbonFlux       Float
+
+  project          Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model SatelliteSnapshot {
+  id          String   @id @default(uuid())
+  projectId   String
+  date        String
+  satellite   String
+  resolution  String
+  canopyDelta String
+  imageUrl    String
+  ndviValue   Float
+  isBaseline  Boolean  @default(false)
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model VerificationStep {
+  id          String   @id @default(uuid())
+  projectId   String
+  timestamp   String
+  title       String
+  source      String
+  status      String
+  hash        String
+  description String
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model AnomalyEvent {
+  id          String   @id @default(uuid())
+  projectId   String
+  projectName String
+  timestamp   String
+  type        String
+  severity    String
+  status      String   // "ACTIVE" | "RESOLVED" | "AUTO-CLEARED"
+  details     String
+  coordinates String
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}

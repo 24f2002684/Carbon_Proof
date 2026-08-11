@@ -7,6 +7,7 @@ import { HeroSection } from '@/components/HeroSection';
 import { LiveMapSection } from '@/components/LiveMapSection';
 import { CreditPassport } from '@/components/CreditPassport';
 import { RiskIntelligence } from '@/components/RiskIntelligence';
+import { CostCalculator } from '@/components/CostCalculator';
 import { HowItWorks } from '@/components/HowItWorks';
 import { Footer } from '@/components/Footer';
 import { MOCK_PROJECTS, FEATURED_CREDIT } from '@/data/mockData';
@@ -78,6 +79,10 @@ export default function Home() {
         <LiveMapSection onSelectProjectForPassport={handleSelectProjectForPassport} />
 
         <CreditPassport credit={activeCredit} projectOverride={selectedProject} />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <CostCalculator />
+        </div>
 
         <RiskIntelligence onSelectProject={handleSelectProjectForPassport} />
 

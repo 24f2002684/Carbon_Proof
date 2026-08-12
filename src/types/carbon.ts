@@ -34,7 +34,9 @@ export interface CarbonProject {
   name: string;
   location: string;
   country: string;
-  coordinates: [number, number]; // [lat, lng]
+  coordinates?: [number, number]; // [lat, lng]
+  latitude?: number;
+  longitude?: number;
   region: 'S. America' | 'Africa' | 'SE Asia' | 'N. America';
   type: 'Reforestation' | 'Mangrove Restoration' | 'Avoided Deforestation' | 'Peatland Conservation';
   areaHectares: number;

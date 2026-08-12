@@ -42,7 +42,13 @@ export async function GET(request: Request) {
       orderBy: { riskScore: 'desc' },
     });
 
-    return NextResponse.json({ success: true, count: projects.length, projects });
+    const formattedProjects = projects.map((p) => ({
+      ...p,
+      coordinates: [p.latitude, p.longitude] as [number, number],
+      telemetryHistory: p.telemetry || [],
+    }));
+
+    return NextResponse.json({ success: true, count: formattedProjects.length, projects: formattedProjects });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
   }

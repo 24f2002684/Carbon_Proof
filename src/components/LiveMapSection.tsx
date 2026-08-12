@@ -34,8 +34,9 @@ export const LiveMapSection: React.FC<LiveMapSectionProps> = ({ onSelectProjectF
   });
 
   // Convert lat/lng to percentage coordinates on world SVG grid
-  const getCoordinates = (coords: [number, number]): { x: number; y: number } => {
-    const [lat, lng] = coords;
+  const getCoordinates = (project: CarbonProject): { x: number; y: number } => {
+    const lat = project.coordinates?.[0] ?? project.latitude ?? 0;
+    const lng = project.coordinates?.[1] ?? project.longitude ?? 0;
     // Map lng (-180 to 180) -> (0 to 100)
     const x = ((lng + 180) / 360) * 100;
     // Map lat (-90 to 90) -> (100 to 0)
@@ -151,7 +152,7 @@ export const LiveMapSection: React.FC<LiveMapSectionProps> = ({ onSelectProjectF
 
         {/* Project Glowing Nodes */}
         {filteredProjects.map((project) => {
-          const { x, y } = getCoordinates(project.coordinates);
+          const { x, y } = getCoordinates(project);
           const isSelected = selectedProject.id === project.id;
           const isFlagged = project.trustStatus !== 'VERIFIED';
 

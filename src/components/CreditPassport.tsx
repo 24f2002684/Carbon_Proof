@@ -154,7 +154,7 @@ export const CreditPassport: React.FC<CreditPassportProps> = ({
               <text x="170" y="140" fill="#E8B74F" fontSize="10" fontFamily="monospace">IOT NODE MESH #142</text>
             </svg>
             <div className="absolute bottom-3 left-3 px-3 py-1 rounded bg-[#0A120E]/90 border border-[#EAF3EE]/10 font-mono text-[10px] text-[#8FA79A]">
-              BOUNDS: Lat {activeProject.coordinates[0]}° | Lng {activeProject.coordinates[1]}°
+              BOUNDS: Lat {activeProject.coordinates?.[0] ?? activeProject.latitude ?? 0}° | Lng {activeProject.coordinates?.[1] ?? activeProject.longitude ?? 0}°
             </div>
           </div>
         </div>

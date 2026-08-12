@@ -52,7 +52,16 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: 'Credit Passport not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, credit });
+    const formattedCredit = {
+      ...credit,
+      project: {
+        ...credit.project,
+        coordinates: [credit.project.latitude, credit.project.longitude] as [number, number],
+        telemetryHistory: credit.project.telemetry || [],
+      },
+    };
+
+    return NextResponse.json({ success: true, credit: formattedCredit });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch credit passport' }, { status: 500 });
   }

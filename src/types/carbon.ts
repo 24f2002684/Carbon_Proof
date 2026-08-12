@@ -52,6 +52,9 @@ export interface CarbonProject {
   satelliteSnapshots: SatelliteSnapshot[];
   sensorMeshNodes: number;
   droneSurveysCompleted: number;
+  verraRegistryId?: string;
+  goldStandardId?: string;
+  claimStatement?: string;
 }
 
 export interface CarbonCredit {

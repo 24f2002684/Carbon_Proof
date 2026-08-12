@@ -39,6 +39,9 @@ model Project {
   traditionalAuditDays   Int                   @default(180)
   carbonProofCost        Float                 @default(2400)
   carbonProofSeconds     Float                 @default(4.2)
+  verraRegistryId        String?               @default("VCS-1482")
+  goldStandardId         String?               @default("GS-3941")
+  claimStatement         String                @default("Claims zero net deforestation across project boundary since 2022 vintage.")
   updatedAt              DateTime              @updatedAt
 
   credits                Credit[]
